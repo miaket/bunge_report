@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <v-navigation-drawer
-      persistent
       :mini-variant="miniVariant"
       :clipped="clipped"
+      temporary
       v-model="drawer"
       enable-resize-watcher
       fixed
@@ -29,13 +29,30 @@
       :clipped-left="clipped"
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
+      <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
-      </v-btn>
+      </v-btn> -->
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-content>
+      <v-layout>
+        <v-fab-transition>
+          <v-btn
+            class="fabboy"
+            @click.stop="drawer = !drawer"
+            v-model="fab"
+            fab
+            fixed
+            left
+          >
+          <v-icon v-html="drawer ? 'chevron_left' : 'chevron_right'"></v-icon>
+        </v-btn>
+      </v-fab-transition>
+        <!-- <v-btn icon @click.stop="drawer = !drawer">
+          <v-icon v-html="drawer ? 'chevron_left' : 'chevron_right'"></v-icon>
+        </v-btn> -->
+      </v-layout>
       <router-view/>
     </v-content>
     <v-footer :fixed="fixed" app>
@@ -57,9 +74,29 @@ export default {
       }],
       miniVariant: true,
       right: true,
-      title: 'Bunge'
+      title: 'Bunge',
+      fab: false,
+      hidden: false,
+      tabs: null
+    }
+  },
+  computed: {
+    activeFab () {
+      switch (this.tabs) {
+        case 'one': return { 'color': 'indigo', icon: 'share' }
+        case 'two': return { 'color': 'red', icon: 'edit' }
+        case 'three': return { 'color': 'green', icon: 'keyboard_arrow_up' }
+        default: return {}
+      }
     }
   },
   name: 'App'
 }
 </script>
+
+<style lang="stylus">
+  @import './stylus/main'
+  .fabboy{
+    top: 50%
+  }
+</style>
