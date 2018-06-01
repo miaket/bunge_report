@@ -1,13 +1,14 @@
 <template>
   <v-app>
     <v-navigation-drawer
+      class="nav-menu-drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
-      temporary
       v-model="drawer"
-      enable-resize-watcher
+      height="20%"
       fixed
-      app
+      enable-resize-watcher
+
     >
       <v-list>
         <v-list-tile
@@ -28,10 +29,6 @@
       app
       :clipped-left="clipped"
     >
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
-      </v-btn> -->
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
@@ -39,12 +36,16 @@
       <v-layout>
         <v-fab-transition>
           <v-btn
+            v-bind:class="{ goleft: navisopen }"
+            v-on:click="navisopen = !navisopen"
             class="fabboy"
             @click.stop="drawer = !drawer"
             v-model="fab"
             fab
             fixed
             left
+            relative
+            small
           >
           <v-icon v-html="drawer ? 'chevron_left' : 'chevron_right'"></v-icon>
         </v-btn>
@@ -60,6 +61,7 @@
     </v-footer>
   </v-app>
 </template>
+
 
 <script>
 export default {
@@ -77,7 +79,8 @@ export default {
       title: 'Bunge',
       fab: false,
       hidden: false,
-      tabs: null
+      tabs: null,
+      navisopen: true
     }
   },
   computed: {
@@ -96,7 +99,13 @@ export default {
 
 <style lang="stylus">
   @import './stylus/main'
-  .fabboy{
-    top: 50%
+
+  .nav-menu-drawer{
+    position: absolute;
+    top:45%
+    transform: translateY(-50%);
+  }
+  .goleft{
+    left:90px;
   }
 </style>
