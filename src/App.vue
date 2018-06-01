@@ -2,12 +2,11 @@
   <v-app>
     <v-navigation-drawer
       class="nav-menu-drawer"
-      :mini-variant="miniVariant"
+      :mini-variant="true"
       :clipped="clipped"
       v-model="drawer"
       height="20%"
       fixed
-      enable-resize-watcher
 
     >
       <v-list>
@@ -36,7 +35,7 @@
       <v-layout>
         <v-fab-transition>
           <v-btn
-            v-bind:class="{ goleft: navisopen }"
+            v-bind:class="{ goRight: navisopen }"
             v-on:click="navisopen = !navisopen"
             class="fabboy"
             @click.stop="drawer = !drawer"
@@ -74,7 +73,6 @@ export default {
         icon: 'bubble_chart',
         title: 'Inspire'
       }],
-      miniVariant: true,
       right: true,
       title: 'Bunge',
       fab: false,
@@ -105,7 +103,7 @@ export default {
     top:45%
     transform: translateY(-50%);
   }
-  .goleft{
-    left:90px;
+  .goRight{
+    left:60px;
   }
 </style>
